@@ -1,6 +1,5 @@
 source 'https://rubygems.org'  
 
-gem 'mongoid', '~> 4', github: 'mongoid/mongoid'
 gem 'bson_ext'
 
 gem 'json'
@@ -14,3 +13,7 @@ group :development do
   gem 'thin'
   gem 'rack-livereload'
 end
+
+gem "sqlite3"
+gem "activerecord"
+gem "sinatra-activerecord"

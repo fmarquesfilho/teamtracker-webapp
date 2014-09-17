@@ -2,7 +2,7 @@ require 'octokit'
 
 #use Rack::Session::Pool, :expire_after => 2592000
 module Sinatra
-  module Session
+  module SessionController
     
     module Helpers
       def authorized?
@@ -31,7 +31,7 @@ module Sinatra
     end
 
     def self.registered(app)
-      app.helpers Session::Helpers
+      app.helpers SessionController::Helpers
 
       app.get '/login_url' do
         content_type :json
@@ -53,5 +53,5 @@ module Sinatra
     end
   end
   
-  register Session
+  register SessionController
 end
