@@ -4,7 +4,6 @@ class CreateUser < ActiveRecord::Migration
       t.string :name
       t.string :gh_login
       t.string :slack_login
-      t.references :team
       
       t.timestamps
     end

@@ -37,13 +37,13 @@ module Sinatra
       app.get '/callback' do
         content_type :json
         login(params[:code])
-        return current_user.name
+        return current_gh_user.name
       end
 
       app.get '/profile' do
         content_type :json
         return { 
-          user: current_user.to_attrs
+          user: current_gh_user.to_attrs
         }.to_json
       end
     end

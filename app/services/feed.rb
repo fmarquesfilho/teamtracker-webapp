@@ -1,6 +1,6 @@
 class Feed
   def initialize(params)
-    @membership = Membership.find(user_id: params[:user], team_id: params[:user])
+    @membership = Membership.find_by(user_id: params[:user], team_id: params[:user])
     @team = @membership.team
     @user = @membership.user
     @repos = @team.repos

@@ -9,14 +9,17 @@ class Session
 
   def login(code)
     @session[:access_token] = Octokit.exchange_code_for_token(code, client_id, client_secret)[:access_token]
+    
+    user = current_gh_user
+    User.create(name: user.login, gh_login: user.login) if current_user.nil?
   end
 
   def current_gh_user
-    Octokit::Client.new(access_token: @session[:access_token]).user
+    @current_gh_user ||= Octokit::Client.new(access_token: @session[:access_token]).user
   end
 
   def current_user
-    User.where(gh_login: current_gh_user.login)
+    User.find_by(gh_login: current_gh_user.login)
   end
 
   def authorize_url
