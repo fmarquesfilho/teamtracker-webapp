@@ -3,6 +3,7 @@ class CreateMembership < ActiveRecord::Migration
     create_table :memberships, id: false do |t|
       t.references :team
       t.references :user
+      t.boolean :core
       
       t.timestamps
     end

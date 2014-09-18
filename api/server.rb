@@ -15,12 +15,15 @@ def require_all(_dir)
 end
 
 require_all('../app/models')
+require_all('../app/services')
 
 enable :sessions
 
 require_relative './controllers/session_controller'
 
 set :database, "sqlite3:tt.db"
+set :aggregator_url, "colabore.herokuapp.com"
 
 require_relative './controllers/team_controller'
+require_relative './controllers/feed_controller'
 

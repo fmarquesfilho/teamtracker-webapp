@@ -6,27 +6,23 @@ module Sinatra
     
     module Helpers
       def authorized?
-        session[:access_token]
+        Session.new(session).authorized?
       end
 
       def authorize_url
-        return Octokit::Client.new.authorize_url(client_id, scope: 'public_repo, user')
+        Session.new(session).authorize_url
       end
 
       def login(code)
-        session[:access_token] = Octokit.exchange_code_for_token(params[:code], client_id, client_secret)[:access_token]
+        Session.new(session).login(code)
       end
 
+      def current_gh_user
+        Session.new(session).current_gh_user
+      end
+      
       def current_user
-        @user ||= Octokit::Client.new(access_token: session[:access_token]).user
-      end
-
-      def client_id
-        ENV['GH_BASIC_CLIENT_ID']
-      end
-
-      def client_secret
-        ENV['GH_BASIC_SECRET_ID']
+        Session.new(session).current_user
       end
     end
 
