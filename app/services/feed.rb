@@ -1,4 +1,14 @@
 class Feed
+  class << self
+    def process(*args)
+      @@processors = *args
+    end
+  end
+  
+  @@processors = []
+  
+  process :sort
+  
   def initialize(params, aggregator_url)
     @team = Team.find(params[:team])
     @repos = @team.repos
@@ -18,7 +28,18 @@ class Feed
     
     result += JSON.parse(team_str)
     
-    return result.to_json
+    return execute_process(result)
   end
   
+  def execute_process(json)
+    @@processors.each do |p|
+      json = send(p, json)
+    end
+    
+    return json.to_json
+  end
+  
+  def sort(json)
+    json.sort_by { |x| Time.iso8601(x["event_time"]) }.reverse!
+  end
 end

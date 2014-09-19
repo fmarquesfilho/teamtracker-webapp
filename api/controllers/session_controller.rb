@@ -28,7 +28,7 @@ module Sinatra
 
     def self.registered(app)
       app.helpers SessionController::Helpers
-
+      
       app.get '/login_url' do
         content_type :json
         return { url: authorize_url }.to_json
@@ -40,7 +40,7 @@ module Sinatra
         return current_gh_user.name
       end
 
-      app.get '/profile' do
+      app.get '/protected/profile' do
         content_type :json
         return { 
           user: current_gh_user.to_attrs
