@@ -1,3 +1,5 @@
+require 'rest-client'
+
 module Sinatra
   module TeamController
     
@@ -7,9 +9,10 @@ module Sinatra
 
     def self.registered(app)
       app.helpers TeamController::Helpers
-
+ 
       app.get '/feed/:team' do
-        Feed.new(team: params[:team], user: current_user_id).get
+        content_type :json
+        Feed.new({team: params[:team]}, settings.aggregator_url).get
       end
     end
   end

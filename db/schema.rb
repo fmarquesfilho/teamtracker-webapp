@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20140918010544) do
   create_table "memberships", id: false, force: true do |t|
     t.integer  "team_id"
     t.integer  "user_id"
+    t.boolean  "core"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,12 +29,13 @@ ActiveRecord::Schema.define(version: 20140918010544) do
 
   create_table "teams", force: true do |t|
     t.string   "name"
-    t.string   "organization"
+    t.string   "gh_organization"
+    t.string   "slack_team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tracked_bies", force: true do |t|
+  create_table "tracked_bies", id: false, force: true do |t|
     t.integer  "team_id"
     t.integer  "repo_id"
     t.datetime "created_at"
@@ -43,8 +45,7 @@ ActiveRecord::Schema.define(version: 20140918010544) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "gh_login"
-    t.string   "slack_login"
-    t.integer  "team_id"
+    t.string   "slack_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
