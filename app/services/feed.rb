@@ -22,11 +22,9 @@ class Feed
       repo_str = RestClient.get("http://#{@aggregator_url}/api/repos/#{repo.full_name}")
       repo_hash = JSON.parse(repo_str)
       result += repo_hash
-    end    
+    end
     
     team_str = RestClient.get("http://#{@aggregator_url}/api/teams/#{@team.slack_team_id}")
-    
-    puts team_str
     
     result += JSON.parse(team_str)
     
