@@ -4,6 +4,7 @@ module Sinatra
     def self.registered(app)
       app.before '*' do
         content_type :json
+        response.headers['Access-Control-Allow-Origin'] = '*'
       end
 
       app.before /protected/ do
