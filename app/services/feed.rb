@@ -26,6 +26,8 @@ class Feed
     
     team_str = RestClient.get("http://#{@aggregator_url}/api/teams/#{@team.slack_team_id}")
     
+    puts team_str
+    
     result += JSON.parse(team_str)
     
     return execute_process(result)

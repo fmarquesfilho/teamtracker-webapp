@@ -1,14 +1,14 @@
 require 'rest-client'
 
 module Sinatra
-  module TeamController
+  module FeedController
     
     module Helpers
       
     end
 
     def self.registered(app)
-      app.helpers TeamController::Helpers
+      app.helpers FeedController::Helpers
  
       app.get '/protected/feed/:team' do
         content_type :json
@@ -17,5 +17,5 @@ module Sinatra
     end
   end
   
-  register TeamController
+  register FeedController
 end
