@@ -25,5 +25,5 @@ require_relative './controllers/session_controller'
 set :database, "sqlite3:tt.db"
 set :aggregator_url, "colabore.herokuapp.com"
 
-require_all('../app/controllers')
+require_all('./controllers')
 
