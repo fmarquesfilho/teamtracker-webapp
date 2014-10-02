@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20140918010544) do
     t.integer  "team_id"
     t.integer  "user_id"
     t.boolean  "core"
+    t.string   "slack_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,7 +46,6 @@ ActiveRecord::Schema.define(version: 20140918010544) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "gh_login"
-    t.string   "slack_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

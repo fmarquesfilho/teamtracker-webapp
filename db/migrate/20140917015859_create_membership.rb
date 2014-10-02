@@ -4,6 +4,7 @@ class CreateMembership < ActiveRecord::Migration
       t.references :team
       t.references :user
       t.boolean :core
+      t.string :slack_id
       
       t.timestamps
     end
