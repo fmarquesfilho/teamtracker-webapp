@@ -3,7 +3,7 @@ module Sinatra
     
     def self.registered(app)
       app.before '*' do
-        content_type :json
+        content_type :json, charset: 'utf-8'
         response.headers['Access-Control-Allow-Origin'] = '*'
       end
 

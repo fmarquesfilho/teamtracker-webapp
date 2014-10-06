@@ -1,14 +1,4 @@
-class Feed
-  class << self
-    def process(*args)
-      @@processors = *args
-    end
-  end
-  
-  @@processors = []
-  
-  process :sort
-  
+class Feed  
   def initialize(params, aggregator_url)
     @team = Team.find(params[:team])
     @repos = @team.repos
@@ -26,17 +16,39 @@ class Feed
     
     team_str = RestClient.get("http://#{@aggregator_url}/api/teams/#{@team.slack_team_id}")
     
-    result += JSON.parse(team_str)
+    team_json = process_team_json(JSON.parse(team_str))
     
-    return execute_process(result)
+    result += team_json
+    
+    return sort(result).to_json
   end
   
-  def execute_process(json)
-    @@processors.each do |p|
-      json = send(p, json)
-    end
+  private
+  def process_team_json(json)
+    users = {}
     
-    return json.to_json
+    json.each do |obj|
+      recipient_id = obj["event_recipient"][1..-1]
+      sender_id = obj["user_id"]
+      
+      users[sender_id] ||= Membership.find_by(slack_id: obj["user_id"]).user
+      obj["sender"] = users[sender_id].as_json
+      add_avatar(obj["sender"])
+      
+      if obj["event_recipient"] == "!channel"
+        users[recipient_id] = { name: 'Channel' }
+      else
+        users[recipient_id] ||= Membership.find_by(slack_id: recipient_id).user
+      end
+      
+      obj["recipient"] = users[recipient_id].as_json
+      add_avatar(obj["recipient"])
+    end
+  end
+  
+  def add_avatar(json)
+    return json["avatar_url"] = "http://i60.tinypic.com/2j2dgqq.png" unless json['gh_login']
+    json["avatar_url"] = "https://avatars.githubusercontent.com/" + json['gh_login']
   end
   
   def sort(json)
