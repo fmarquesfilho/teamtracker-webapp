@@ -23,7 +23,7 @@ class Session
   end
 
   def authorize_url
-    return Octokit::Client.new.authorize_url(client_id, scope: 'public_repo, user')
+    return Octokit::Client.new.authorize_url(client_id, scope: 'repo, user, read:org')
   end
   
   def client_id
