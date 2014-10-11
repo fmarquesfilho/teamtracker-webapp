@@ -22,6 +22,10 @@ class Session
     User.find_by(gh_login: current_gh_user.login)
   end
 
+  def octokit_client
+    Octokit::Client.new(access_token: @session[:access_token])
+  end
+  
   def authorize_url
     return Octokit::Client.new.authorize_url(client_id, scope: 'repo,user,read:org')
   end

@@ -16,6 +16,10 @@ module Sinatra
       def login(code)
         Session.new(session).login(code)
       end
+      
+      def octokit_client
+        Session.new(session).octokit_client
+      end
 
       def current_gh_user
         Session.new(session).current_gh_user
@@ -42,8 +46,16 @@ module Sinatra
 
       app.get '/protected/profile' do
         content_type :json
+        
+        orgs = { orgs: octokit_client.organizations }
+        
+        orgs[:orgs].each do |org|
+          org[:repos] = octokit_client.repositories(org.login)
+        end
+        
         return { 
           user: current_gh_user.to_attrs
+          .merge(orgs)
         }.to_json
       end
     end
