@@ -8,6 +8,10 @@ require "sinatra/activerecord"
 
 require 'rack-livereload'
 
+require "rack/csrf"
+
+use Rack::Csrf, :raise => true
+
 def require_all(_dir)
   Dir[File.expand_path(File.join(File.dirname(File.absolute_path(__FILE__)), _dir)) + "/**/*.rb"].each do |file|
     require file
@@ -19,6 +23,7 @@ require_all('../app/services')
 require_all('../app/policies')
 
 enable :sessions
+set :session_secret, '*&(^B234'
 
 require_relative './controllers/session_controller'
 

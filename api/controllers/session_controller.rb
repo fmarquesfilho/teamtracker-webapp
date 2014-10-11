@@ -37,7 +37,7 @@ module Sinatra
       app.get '/callback' do
         content_type :json
         login(params[:code])
-        return current_gh_user.name
+        redirect params[:redirect_to]
       end
 
       app.get '/protected/profile' do

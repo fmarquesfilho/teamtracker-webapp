@@ -8,6 +8,8 @@ gem 'sinatra', '1.4.5'
 
 gem 'octokit'
 
+gem 'rack_csrf'
+
 group :development do
   gem 'sinatra-contrib'
   gem 'thin'
