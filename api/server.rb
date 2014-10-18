@@ -19,18 +19,18 @@ def require_all(_dir)
   end
 end
 
+$config = YAML.load_file('config/environments/development.yml')
+
 require_all('../app/models')
 require_all('../app/services')
 require_all('../app/policies')
 
 enable :sessions
 
-config = YAML.load_file('config/environments/development.yml')
+set :session_secret, $config['session_secret']
 
-set :session_secret, config['session_secret']
-
-set :database, config['database']['name']
-set :aggregator_url, config['aggregator_url']
+set :database, $config['database']['name']
+set :aggregator_url, $config['aggregator_url']
 
 require_relative './controllers/session_controller'
 
