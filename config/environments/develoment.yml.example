@@ -1,0 +1,6 @@
+headers:
+  access_control_allow_origin: http://potato-machine-111353.sae1.nitrousbox.com:3001
+database:
+  name: sqlite3:development.db
+session_secret: '*&(^B234'
+aggregator_url: colabore.herokuapp.com

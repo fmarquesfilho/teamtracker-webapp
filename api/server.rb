@@ -5,6 +5,7 @@ require 'rack'
 require 'sinatra'
 require "sinatra/reloader" if development?
 require "sinatra/activerecord"
+require "yaml"
 
 require 'rack-livereload'
 
@@ -23,12 +24,15 @@ require_all('../app/services')
 require_all('../app/policies')
 
 enable :sessions
-set :session_secret, '*&(^B234'
+
+config = YAML.load_file('config/environments/development.yml')
+
+set :session_secret, config['session_secret']
+
+set :database, config['database']['name']
+set :aggregator_url, config['aggregator_url']
 
 require_relative './controllers/session_controller'
-
-set :database, "sqlite3:tt.db"
-set :aggregator_url, "colabore.herokuapp.com"
 
 require_all('./controllers')
 

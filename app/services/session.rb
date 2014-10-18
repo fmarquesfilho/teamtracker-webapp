@@ -27,7 +27,7 @@ class Session
   end
   
   def authorize_url
-    return Octokit::Client.new.authorize_url(client_id, scope: 'repo,user,read:org')
+    return Octokit::Client.new.authorize_url(client_id, scope: 'repo,user,read:org') + "?=redirect_uri=http://google.com"
   end
   
   def client_id
