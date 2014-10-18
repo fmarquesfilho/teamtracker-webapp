@@ -4,3 +4,4 @@ database:
   name: sqlite3:development.db
 session_secret: '*&(^B234'
 aggregator_url: colabore.herokuapp.com
+app_url: potato-machine-111353.sae1.nitrousbox.com:3001

@@ -41,7 +41,7 @@ module Sinatra
       app.get '/callback' do
         content_type :json
         login(params[:code])
-        redirect params[:redirect_to]
+        redirect $config['app_url'] + "/" + "sign_up.html"
       end
 
       app.get '/protected/profile' do
