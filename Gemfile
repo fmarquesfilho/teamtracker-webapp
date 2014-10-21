@@ -16,6 +16,7 @@ group :development do
   gem 'rack-livereload'
 end
 
+gem 'activesupport'
 gem "sqlite3"
 gem "activerecord"
 gem "sinatra-activerecord"
