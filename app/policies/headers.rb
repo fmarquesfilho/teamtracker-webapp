@@ -2,10 +2,18 @@ module Sinatra
   module HeadersPolicy
     
     def self.registered(app)
-      app.before '*' do
-        content_type :json, charset: 'utf-8'
-        response.headers['Access-Control-Allow-Origin'] = Settings.headers[:access_control_allow_origin]
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+      app.before '/*' do
+        headers['Access-Control-Allow-Origin'] = Settings.app_url
+        headers['Access-Control-Allow-Methods'] = "GET, POST, PUT, DELETE, OPTIONS"
+        headers['Access-Control-Allow-Headers'] ="accept, authorization, origin, content-type, X-PINGOTHER"
+        "*"
+      end
+
+      app.options "/*" do
+        headers['Access-Control-Allow-Origin'] = Settings.app_url
+        headers['Access-Control-Allow-Methods'] = "GET, POST, PUT, DELETE, OPTIONS"
+        headers['Access-Control-Allow-Headers'] ="accept, authorization, origin, content-type, X-PINGOTHER"
+        "*"
       end
     end
   end

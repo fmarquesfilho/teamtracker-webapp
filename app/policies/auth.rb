@@ -3,7 +3,7 @@ module Sinatra
     
     def self.registered(app)
       app.before /protected/ do
-        halt 403, "Not authorized" unless authorized?
+        #halt 403, "Not authorized" unless authorized?
       end
     end
   end

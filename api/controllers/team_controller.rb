@@ -20,8 +20,12 @@ module Sinatra
       
       app.post '/protected/teams' do
         content_type :json
-        Team.create(name: params[:name], gh_organization: params[:gh_organization], slack_team_id: params[:slack_team_id])
-        return 200
+        puts params.inspect
+        team = Team.find_by(name: params[:name]) || 
+          Team.create(name: params[:name], gh_organization: params[:gh_organization], slack_team_id: params[:slack_team_id])
+        
+        Membership.create(user_id: current_user.id, team_id: team.id) if Membership.find_by(user_id: current_user.id, team_id: team.id).nil?
+        return { success_url: Settings.app_url + "/styleguide.html" }.to_json
       end
       
       app.get '/protected/teams/:team/members' do
